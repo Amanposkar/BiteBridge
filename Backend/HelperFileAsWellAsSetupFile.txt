@@ -1,0 +1,49 @@
+Installing Redis Server (wsl,virtual machine system --> must be on) ::
+
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+
+sudo apt-get update
+sudo apt-get install redis
+
+
+Starting Redis Server ::
+sudo service redis-server start
+
+
+Connecting to Redis Client ::
+redis-cli
+
+(Checking if it is active or not)
+127.0.0.1:6379> ping
+PONG
+
+
+//Password and Email Are Same
+Admin Insertion :::::
+INSERT INTO admin (first_name, last_name, password, role, username) VALUES
+('AdminF', 'AdminL', '$2a$10$dGEZWkxB0Ty3C2PWm/rv2ugWmDTHATxv8Sxe37wK9gSRJ/EcIYMNK', 'ROLE_ADMIN', 'admin');
+
+//Password and Email Are Same
+Canteen Insertion :::::
+INSERT INTO canteen (password,role,username) VALUES ('$2a$10$CjMzkKaognfWhEDX7WMJIeAz0Zs1Z1GqMCVigLleB/NDEIJh3kbOG','ROLE_CANTEEN','canteen1');
+INSERT INTO canteen (password,role,username) VALUES ('$2a$10$CjMzkKaognfWhEDX7WMJIeAz0Zs1Z1GqMCVigLleB/NDEIJh3kbOG','ROLE_CANTEEN','canteen2');
+INSERT INTO canteen (password,role,username) VALUES ('$2a$10$6O02JwNxe4xE0y1KV0pf3..spQV3SlaYxkfF7S7luauvj/2bkwX9u','ROLE_CANTEEN','canteen3');
+INSERT INTO canteen (password,role,username) VALUES ('$2a$10$9Watw2xLEbXJqCOhrgKS1eaAVZOZnkLIHJi3H0.BerKy2eMES.5g6','ROLE_CANTEEN','canteen4');
+INSERT INTO canteen (password,role,username) VALUES ('$2a$10$VOt0mWAbWKqfbSzOi0WazO4vIxSXL.7ccoBcwmrGFYdi.AoCaLuzy','ROLE_CANTEEN','canteen5');
+
+
+
+
+//iMP cODE --> twilio
+84X8AYBNZGHRNFWLDZX55R78
+
+//ngrok
+C:\Users\dac\Downloads\Java\OrderQRCodes
+python -m http.server 8000
+ngrok http 8000
+
+set pathstring and savingqrpath every time;
+
+princesidps.60@gmail.com

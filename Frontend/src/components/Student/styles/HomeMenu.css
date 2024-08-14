@@ -1,0 +1,78 @@
+.food-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.food-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.food-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.food-name {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.food-price {
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.food-actions {
+    display: flex;
+    align-items: center;
+}
+
+.add-button {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.3rem 1rem;
+    cursor: pointer;
+}
+
+.add-button:hover {
+    background-color: #3700b3;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+}
+
+.decrement, .increment {
+    background-color: #6200ea;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.decrement:hover, .increment:hover {
+    background-color: #3700b3;
+}
+
+.quantity {
+    margin: 0 10px;
+    font-size: 1rem;
+    font-weight: bold;
+}

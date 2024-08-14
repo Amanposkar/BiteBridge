@@ -1,0 +1,45 @@
+.signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('/public/images/img-5.jpg'); /* Replace with your background image */
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.icon-container {
+    position: absolute;
+    top: 20px; /* Adjust position as needed */
+    width: 100%;
+    text-align: center;
+    z-index: 10; /* Ensure it is above the form */
+}
+
+.icon-container img {
+    max-width: 150px; /* Adjust size as needed */
+    border-radius: 50%; /* Optional: if you want a circular image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: for some shadow effect */
+    margin-left: 31em;
+    margin-top: 86px;
+}
+
+.signup-form {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    opacity: 0.9; /* Adjust overall transparency */
+    margin-left: 31em;
+}
+
+.btn-pink-moon {
+    background: #ec008c;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fc6767, #ec008c);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #fc6767, #ec008c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: #fff;
+    border: 3px solid #eee;
+}

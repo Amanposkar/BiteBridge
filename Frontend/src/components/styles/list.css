@@ -1,0 +1,12 @@
+.listContainer table{
+    padding: 1vw;
+}
+
+.listContainer table tr td{
+    padding: 1vw;
+}
+
+.listContainer{
+    font-size: 2rem;
+    color: white;
+}
