@@ -2,6 +2,7 @@ package com.example.foodbooking.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -148,7 +149,8 @@ public class StudentService {
 		System.out.println("Order ID: " + placeNewOrder.getId() + "\n" + "Time: " + placeNewOrder.getTimestamp());
 		QRCodeGenerator.generateQRCode(placeNewOrder, receipt.getTotal());
 		String message = "Your order has been placed successfully. Order ID: " + placeNewOrder.getId();
-		notificationService.sendWhatsAppMessage(student.getMobileNo(), message, placeNewOrder, true);
+		// notificationService.sendWhatsAppMessage(student.getMobileNo(), message,
+		// placeNewOrder, true);
 		return new ApiResponse("Order Placed Successfully");
 	}
 
@@ -177,6 +179,7 @@ public class StudentService {
 					singleCartDTO.setOrderId(values.getId());
 					singleCartDTO.setOrderStatus(values.getStatus());
 					singleCartDTO.setTotalCartPrice(cart.getTotal());
+					singleCartDTO.setTimeStamp(values.getTimestamp());
 					cartDTO.add(singleCartDTO);
 				});
 
@@ -253,8 +256,10 @@ public class StudentService {
 		order.setQrcodepath(QRCodeGenerator.getPath(order));
 		QRCodeGenerator.generateQRCode(order, receipt.getTotal());
 		String message = "Your order has been placed Delegated. Order ID: " + order.getId();
-		notificationService.sendWhatsAppMessage(student.getMobileNo(), message, order, false);
-		notificationService.sendWhatsAppMessage(friend.getMobileNo(), message, order, true);
+		// notificationService.sendWhatsAppMessage(student.getMobileNo(), message,
+		// order, false);
+		// notificationService.sendWhatsAppMessage(friend.getMobileNo(), message, order,
+		// true);
 		return new ApiResponse("Order Delegated Successfully");
 	}
 
@@ -266,4 +271,39 @@ public class StudentService {
 		return new ApiResponse("Student Details Updated Successfully");
 	}
 
+	public Object getHistory() throws ServerSideException {
+		Long studentId = processUserDetails();
+		Student student = studentRepository.findById(studentId)
+				.orElseThrow(() -> new ServerSideException("No such Student exists with given UserId"));
+		List<Orders> orders = ordersRepository.findOrdersByStudent(student);
+		Collections.sort(orders);
+
+		List<CartDTO> cartDTO = new ArrayList<CartDTO>();
+
+		orders.stream().forEach(values -> {
+			System.out.println(values.getStatus());
+			Cart cart = values.getCart();
+			CartDTO singleCartDTO = new CartDTO();
+			cart.getItems().forEach(item -> {
+				CartItemDTO cartItemDTO = new CartItemDTO();
+				cartItemDTO.setDishName(item.getDish().getName());
+				cartItemDTO.setPrice(item.getDish().getPrice());
+				cartItemDTO.setQuantity(item.getQuantity());
+				cartItemDTO.setTotalPrice(item.getTotalPrice());
+				singleCartDTO.addItemInList(cartItemDTO);
+			});
+			singleCartDTO.setOrderId(values.getId());
+			singleCartDTO.setOrderStatus(values.getStatus());
+			singleCartDTO.setTotalCartPrice(cart.getTotal());
+			singleCartDTO.setTimeStamp(values.getTimestamp());
+			cartDTO.add(singleCartDTO);
+		});
+
+//		cartDTO.forEach(cart-> System.out.println(cart));
+
+		if (cartDTO.size() > 0)
+			return cartDTO;
+		else
+			return new ApiResponse("Currently No Order History is Available !!!");
+	}
 }

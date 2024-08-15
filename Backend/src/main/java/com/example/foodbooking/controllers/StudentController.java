@@ -133,4 +133,10 @@ public class StudentController {
 		return ResponseEntity.ok("Logged out successfully.");
 	}
 
+	@PreAuthorize("hasRole('STUDENT')")
+	@GetMapping("/history")
+	public ResponseEntity<?> getHistory() throws ServerSideException {
+		return ResponseEntity.ok(studentService.getHistory());
+	}
+
 }

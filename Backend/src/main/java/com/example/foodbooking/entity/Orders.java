@@ -25,7 +25,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "Orders")
-public class Orders {
+public class Orders implements Comparable<Orders> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,4 +53,9 @@ public class Orders {
 	private Receipt receipt;
 
 	private String qrcodepath;
+
+	@Override
+	public int compareTo(Orders o) {
+		return o.getTimestamp().compareTo(this.timestamp);
+	}
 }

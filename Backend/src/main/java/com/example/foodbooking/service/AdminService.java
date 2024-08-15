@@ -64,7 +64,6 @@ public class AdminService {
 //	}
 
 	public DishDTO addNewDish(@Valid DishDTO dish) throws ServerSideException {
-
 		Admin adminLogin = adminRepository.findById(processUserDetails())
 				.orElseThrow(() -> new ServerSideException("No such Admin exists with given UserId"));
 		Dish addedDish = mapper.map(dish, Dish.class);
