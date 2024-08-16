@@ -1,6 +1,0 @@
-1.Admin ::: History --> segregated by served, placed and Cancelled
-
-4.Implementation of Cart System
-
-3.Student ::: Get QR upon Requests (Low Priority)
-6.Report (Low Priority)

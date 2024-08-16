@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example.foodbooking</groupId>
-	<artifactId>spring_boot_ems_backend_final</artifactId>
+	<artifactId>CanteenManagementSystemBiteBridge</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
-	<name>spring_boot_ems_backend_final</name>
+	<name>CanteenManagementSystemBiteBridge</name>
 	<description>EMS with E-R , patch mapping,  custom annotation for validation,upload emp dtls n image , upload  using requestpart, localdatetime</description>
 	<properties>
 		<java.version>11</java.version>
@@ -121,12 +121,12 @@
 			<artifactId>zxing-spring-boot-starter</artifactId>
 			<version>2.0.0.RELEASE</version>
 		</dependency>
-		        <!-- Twilio dependency -->
-        <dependency>
-            <groupId>com.twilio.sdk</groupId>
-            <artifactId>twilio</artifactId>
-            <version>8.16.0</version>
-        </dependency>
+		<!-- Twilio dependency -->
+		<dependency>
+			<groupId>com.twilio.sdk</groupId>
+			<artifactId>twilio</artifactId>
+			<version>8.16.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

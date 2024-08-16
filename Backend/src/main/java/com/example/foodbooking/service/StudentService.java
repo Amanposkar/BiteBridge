@@ -21,6 +21,7 @@ import com.example.foodbooking.dto.CartItemDTO;
 import com.example.foodbooking.dto.DishDTO;
 import com.example.foodbooking.dto.FriendDTO;
 import com.example.foodbooking.dto.OrdersDTO;
+import com.example.foodbooking.dto.StudentDTO;
 import com.example.foodbooking.dto.StudentSideUpdationDTO;
 import com.example.foodbooking.entity.Cart;
 import com.example.foodbooking.entity.CartItem;
@@ -71,6 +72,11 @@ public class StudentService {
 
 	@Autowired
 	private PasswordEncoder encoder;
+
+	public StudentDTO getStudentDetails() throws ServerSideException {
+		return mapper.map(studentRepository.findById(processUserDetails())
+				.orElseThrow(() -> new ServerSideException("No Student with given Id Present")), StudentDTO.class);
+	}
 
 	public Long processUserDetails() {
 		CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()
@@ -149,8 +155,7 @@ public class StudentService {
 		System.out.println("Order ID: " + placeNewOrder.getId() + "\n" + "Time: " + placeNewOrder.getTimestamp());
 		QRCodeGenerator.generateQRCode(placeNewOrder, receipt.getTotal());
 		String message = "Your order has been placed successfully. Order ID: " + placeNewOrder.getId();
-		// notificationService.sendWhatsAppMessage(student.getMobileNo(), message,
-		// placeNewOrder, true);
+		notificationService.sendWhatsAppMessage(student.getMobileNo(), message, placeNewOrder, true);
 		return new ApiResponse("Order Placed Successfully");
 	}
 
@@ -256,10 +261,8 @@ public class StudentService {
 		order.setQrcodepath(QRCodeGenerator.getPath(order));
 		QRCodeGenerator.generateQRCode(order, receipt.getTotal());
 		String message = "Your order has been placed Delegated. Order ID: " + order.getId();
-		// notificationService.sendWhatsAppMessage(student.getMobileNo(), message,
-		// order, false);
-		// notificationService.sendWhatsAppMessage(friend.getMobileNo(), message, order,
-		// true);
+		notificationService.sendWhatsAppMessage(student.getMobileNo(), message, order, false);
+		notificationService.sendWhatsAppMessage(friend.getMobileNo(), message, order, true);
 		return new ApiResponse("Order Delegated Successfully");
 	}
 

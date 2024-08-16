@@ -17,29 +17,27 @@ import com.google.zxing.qrcode.QRCodeWriter;
 public class QRCodeGenerator {
 
 	public static String getPath(Orders order) {
-		String qrCodePath = "C:/Users/User/Downloads/CdacProject/OrderQRCodes/" + order.getStudent().getId() + "/";
+		String qrCodePath = System.getProperty("user.dir") + "/OrderQRCodes/" + order.getStudent().getId() + "/";
 		String qrCodeName = qrCodePath + order.getStudent().getPrn() + "_" + order.getId() + "_QRCODE.png";
 		return qrCodeName;
 	}
 
 	public static String generateQRCode(Orders order, Long total) throws WriterException, IOException {
-		String qrCodeName = getPath(order);
 		var qrCodeWriter = new QRCodeWriter();
 		BitMatrix bitMatrix = qrCodeWriter.encode("ID: " + order.getId(), BarcodeFormat.QR_CODE, 700, 700);
-		Path path = Paths.get(qrCodeName);
+		Path path = Paths.get(getPath(order));
 
 		// Ensure the directory exists
 		Path parentDir = path.getParent();
 		if (parentDir != null) {
-			java.nio.file.Files.createDirectories(parentDir);
+			Files.createDirectories(parentDir);
 		}
 		MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
 		return path.toString();
 	}
 
 	public static void deleteQRCode(Orders order) {
-		String qrCodeName = getPath(order);
-		Path path = Paths.get(qrCodeName);
+		Path path = Paths.get(getPath(order));
 		try {
 			Files.delete(path);
 			System.out.println("File deleted successfully.");

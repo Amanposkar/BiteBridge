@@ -62,6 +62,12 @@ public class StudentController {
 	}
 
 	@PreAuthorize("hasRole('STUDENT')")
+	@GetMapping("/studentdetails")
+	public ResponseEntity<?> getStudentDetails() throws ServerSideException {
+		return ResponseEntity.ok(studentService.getStudentDetails());
+	}
+
+	@PreAuthorize("hasRole('STUDENT')")
 	@GetMapping("/dishes")
 	public ResponseEntity<?> getAllDishes() {
 		return ResponseEntity.ok(studentService.getAllDishes());

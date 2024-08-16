@@ -1,5 +1,11 @@
 package com.example.foodbooking.notification.service;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +20,25 @@ public class NotificationService {
 	@Autowired
 	private TwilioConfiguration twilioConfiguration;
 
-	private String uri = "https://8a23-103-174-141-242.ngrok-free.app/";
+	private String uri;
+
+	public NotificationService() {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("ngrok_url.txt"), StandardCharsets.UTF_16))) {
+			String line = reader.readLine();
+			if (line != null) {
+				uri = line.trim(); // .trim() to remove any leading or trailing whitespace
+				System.out.println("Read URL: " + uri);
+			} else {
+				System.err.println("Line is null or empty.");
+			}
+		} catch (IOException e) {
+			System.err.println("Error reading ngrok URL file: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
 
 	public void sendWhatsAppMessage(String to, String body, Orders order, boolean b) {
-		String path = uri + order.getStudent().getId() + "/" + order.getStudent().getPrn() + "_" + order.getId()
+		String path = uri + "/" + order.getStudent().getId() + "/" + order.getStudent().getPrn() + "_" + order.getId()
 				+ "_QRCODE.png";
 		Message message = Message.creator(new PhoneNumber("whatsapp:" + to),
 				new PhoneNumber("whatsapp:" + twilioConfiguration.getPhoneNumber()),

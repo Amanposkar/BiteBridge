@@ -20,7 +20,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 
+//This marks the class as a Spring bean, meaning it can be automatically injected into other parts of the application.
 @Component
+//This annotation is from Lombok and provides a logger (log) for the class, which is used to log messages.
 @Slf4j
 public class JwtUtils {
 
@@ -32,6 +34,8 @@ public class JwtUtils {
 
 	private Key key;
 
+	//@PostConstruct public void init(): This method runs after the class is initialized by Spring. 
+	//It converts the jwtSecret into a Key object using HMAC with SHA-512, which is later used to sign the JWT.
 	@PostConstruct
 	public void init() {
 		key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
@@ -96,3 +100,21 @@ public class JwtUtils {
 		return claims.getExpiration();
 	}
 }
+
+//Imagine you're building a secure web application where users need to log in. Once a user logs in, the server generates a JWT as proof 
+//that the user has been authenticated. This token includes information like the user's identity and roles (permissions), 
+//but it doesn’t contain sensitive data like the password.
+
+//Here's how this utility works in the application:
+
+//Generating the Token: After the user logs in, the generateJwtToken method creates a token containing the user's username, user ID, roles, 
+//and an expiration date. The token is signed with a secret key so that no one can tamper with it.
+
+//Storing and Using the Token: This token is sent to the user's browser and stored there (usually in local storage or a cookie). 
+//For every subsequent request, the token is sent back to the server to prove the user's identity.
+
+//Validating the Token: Every time the server receives a request with a token, the validateJwtToken method 
+//checks whether the token is valid, unaltered, and not expired. If the token is valid, the server trusts the request and proceeds.
+
+//Extracting Information: The server can extract the username and roles from the token using methods like getUserNameFromJwtToken and getAuthoritiesFromClaims. 
+//This information is used to ensure that the user has the right permissions to access specific resources.

@@ -63,6 +63,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		filterChain.doFilter(request, response);// to continue with remaining chain of spring sec filters
 
 	}
+	//When a user sends a request to the server, this filter checks if the request contains a JWT.
+	//If the JWT is present, it first checks whether the token is blacklisted (e.g., because the user logged out).
+	//If the token is valid and not blacklisted, the filter extracts the user’s email and roles from the token.
+	//It then loads additional user details from the database and creates an authentication object.
+	//This authentication object is stored in the security context, making the user recognized as authenticated for the rest of the request.
+	//The request is then passed along to the next filter or controller to process the user's request.
+	//In essence, this filter is the gatekeeper that verifies the user's identity and permissions before allowing them access to the application’s resources.
+
+
+
+
+
+
+
 
 //	@Override
 //	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
