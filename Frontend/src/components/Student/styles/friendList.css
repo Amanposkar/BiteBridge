@@ -1,0 +1,138 @@
+/* Button Styles */
+.friend-button {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.friend-button button {
+  background-color: blueviolet;
+  color: white;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 0 15px;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.friend-button button:hover {
+  background-color: darkviolet;
+  transform: translateY(-2px);
+}
+
+/* Form Styles */
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center vertically */
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto; /* Center horizontally */
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.form h3 {
+  margin-top: 0;
+  font-size: 22px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.form label {
+  display: block;
+  font-size: 15px;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+  margin-bottom: 12px;
+  transition: border-color 0.3s;
+}
+
+.form input:focus {
+  border-color: #5a67d8;
+  outline: none;
+  box-shadow: 0 0 5px rgba(90, 103, 216, 0.3);
+}
+
+/* Use the same button styling as other buttons */
+.form button {
+  background-color: blueviolet;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  width: 100%;
+}
+
+.form button:hover {
+  background-color: darkviolet;
+  transform: translateY(-2px);
+}
+
+/* Error Message */
+.error {
+  color: #d9534f;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* Table Styles */
+.FriendTable {
+  width: 100%;
+  max-width: 800px;
+  margin-top: 25px;
+}
+
+.FriendTable table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 15px;
+  color: #333;
+}
+
+.FriendTable th,
+.FriendTable td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.FriendTable th {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: bold;
+}
+
+.FriendTable tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.FriendTable tr:hover {
+  background-color: #e9e9e9;
+}
+
+.FriendTable caption {
+  font-size: 18px;
+  margin: 10px 0;
+  color: #555;
+}

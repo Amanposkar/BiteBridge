@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axiosInstance from "./axiosInstance"; // Import the Axios instance
-import "./styles/studentsAccount.css";
+import axiosInstance from "../axiosInstance"; // Import the Axios instance
+import "../styles/studentsAccount.css";
 
 // AddStudentForm Component
 const AddStudentForm = ({ onStudentAdded }) => {
@@ -195,6 +195,7 @@ const DeleteStudentForm = ({ onStudentDeleted }) => {
       if (onStudentDeleted) onStudentDeleted(); // Notify parent component
     } catch (err) {
       setError("Error deleting student.");
+      alert("Error making this Update!");
       console.error(err);
     }
   };
@@ -230,8 +231,9 @@ const UpdateStudentForm = ({ onStudentUpdated }) => {
   const [password, setPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [tokensBalance, setTokensBalance] = useState("");
+  const [tokensToAdd, setTokensToAdd] = useState("");
   const [prn, setPrn] = useState("");
+  const [mobileNo, setMobileNo] = useState("");
   const [errors, setErrors] = useState({});
 
   const handleSubmit = async (e) => {
@@ -241,11 +243,8 @@ const UpdateStudentForm = ({ onStudentUpdated }) => {
     if (!id) {
       formErrors.id = "Student ID is required.";
     }
-    if (!username || !/\S+@\S+\.\S+/.test(username)) {
-      formErrors.username = "Valid email is required.";
-    }
-    if (password && password.length < 6) {
-      formErrors.password = "Password must be at least 6 characters.";
+    if (!password) {
+      formErrors.password = "Password is required";
     }
     if (!firstName) {
       formErrors.firstName = "First name is required.";
@@ -253,33 +252,50 @@ const UpdateStudentForm = ({ onStudentUpdated }) => {
     if (!lastName) {
       formErrors.lastName = "Last name is required.";
     }
-    if (tokensBalance === "" || tokensBalance < 0) {
-      formErrors.tokensBalance = "Tokens balance must be a non-negative number.";
+    if (tokensToAdd === "" || tokensToAdd < 0) {
+      formErrors.tokensToAdd = "Tokens to add must be a non-negative number.";
     }
     if (!prn) {
       formErrors.prn = "PRN number is required.";
     }
-
+    if (!mobileNo) {
+      formErrors.mobileNo = "Mobile number is required.";
+    }
     if (Object.keys(formErrors).length === 0) {
       try {
+        // Fetch the current tokens balance
+        const response = await axiosInstance.get(`/admin/student/${id}`);
+        const currentTokensBalance = response.data.tokens_balance;
+        // Calculate the new tokens balance
+        const newTokensBalance = currentTokensBalance + parseInt(tokensToAdd);
+
+        // Prepend +91 to mobileNo
+        const formattedMobileNo = `+91${mobileNo}`;
+
+        // API call to update the student information including the updated tokens balance
         await axiosInstance.put(`/admin/edit/student/${id}`, {
-          username,
+          username: prn,  // Set username as PRN
           password,
-          tokensBalance,
-          firstName,
-          lastName,
+          tokens_balance: newTokensBalance,
+          first_name: firstName, //need to keep these name same as the DTO 
+          last_name: lastName, //if using any different names then provide the references as given here
           prn,
+          mobileNo: formattedMobileNo,
         });
+
         alert("Student updated successfully");
+        // Resetting form fields after successful update
         setId("");
         setUsername("");
         setPassword("");
         setFirstName("");
         setLastName("");
-        setTokensBalance("");
+        setTokensToAdd("");
         setPrn("");
+        setMobileNo("");
         if (onStudentUpdated) onStudentUpdated(); // Notify parent component
       } catch (error) {
+        console.log("error in processing the details here");
         console.error("Error updating student", error);
       }
     } else {
@@ -290,12 +306,15 @@ const UpdateStudentForm = ({ onStudentUpdated }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "id") setId(value);
-    if (name === "username") setUsername(value);
     if (name === "password") setPassword(value);
     if (name === "firstName") setFirstName(value);
     if (name === "lastName") setLastName(value);
-    if (name === "tokensBalance") setTokensBalance(value);
-    if (name === "prn") setPrn(value);
+    if (name === "tokensToAdd") setTokensToAdd(value);
+    if (name === "prn") {
+      setPrn(value);
+      setUsername(value);  // Automatically set username as PRN
+    }
+    if (name === "mobileNo") setMobileNo(value);
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
@@ -321,10 +340,10 @@ const UpdateStudentForm = ({ onStudentUpdated }) => {
           name="username"
           value={username}
           onChange={handleChange}
-          placeholder="Enter student email"
+          placeholder="Username (same as PRN)"
+          readOnly
           required
         />
-        {errors.username && <p className="error">{errors.username}</p>}
       </label>
       <label>
         Password:
@@ -362,19 +381,17 @@ const UpdateStudentForm = ({ onStudentUpdated }) => {
         {errors.lastName && <p className="error">{errors.lastName}</p>}
       </label>
       <label>
-        Tokens Balance:
+        Tokens to Add:
         <input
           type="number"
-          name="tokensBalance"
-          value={tokensBalance}
+          name="tokensToAdd"
+          value={tokensToAdd}
           onChange={handleChange}
-          placeholder="Enter tokens balance"
+          placeholder="Enter tokens to add"
           min="0"
           required
         />
-        {errors.tokensBalance && (
-          <p className="error">{errors.tokensBalance}</p>
-        )}
+        {errors.tokensToAdd && <p className="error">{errors.tokensToAdd}</p>}
       </label>
       <label>
         PRN:
@@ -389,6 +406,18 @@ const UpdateStudentForm = ({ onStudentUpdated }) => {
           required
         />
         {errors.prn && <p className="error">{errors.prn}</p>}
+      </label>
+      <label>
+        Mobile Number:
+        <input
+          type="text"
+          name="mobileNo"
+          value={mobileNo}
+          onChange={handleChange}
+          placeholder="Enter mobile number"
+          required
+        />
+        {errors.mobileNo && <p className="error">{errors.mobileNo}</p>}
       </label>
       <button type="submit">Update Student</button>
     </form>
@@ -409,7 +438,7 @@ const StudentsAccount = () => {
   const fetchStudents = async () => {
     try {
       const response = await axiosInstance.get("/admin/students");
-      console.log(response.data);
+      // console.log(response.data);
       setStudents(response.data);
     } catch (error) {
       console.error("Error fetching students", error);

@@ -1,5 +1,6 @@
 .signup-container {
     display: flex;
+    flex-direction: column; /* Allow the button container and form to stack vertically */
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -25,6 +26,28 @@
     margin-top: 86px;
 }
 
+.signup-buttons {
+    margin-bottom: 20px; /* Space between buttons and the form */
+    position: relative;
+    left: 16.5vw;
+}
+
+.signup-buttons .btn {
+    margin: 0 10px; /* Space between buttons */
+    background-color: blueviolet;
+    color: white;
+    border:none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.signup-buttons .btn:hover{
+    background-color: darkviolet;
+    transform: translateY(-1px);
+}
+
 .signup-form {
     background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
     padding: 20px;
@@ -33,7 +56,8 @@
     max-width: 400px;
     width: 100%;
     opacity: 0.9; /* Adjust overall transparency */
-    margin-left: 31em;
+    margin-top: 20px; /* Space from buttons */
+    margin-left: 31em; /* Center the form, adjust as needed */
 }
 
 .btn-pink-moon {
@@ -42,4 +66,9 @@
     background: linear-gradient(to right, #fc6767, #ec008c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     color: #fff;
     border: 3px solid #eee;
+    width: 100%; /* Make the button take the full width of the form */
+}
+
+.alert {
+    margin-top: 15px;
 }

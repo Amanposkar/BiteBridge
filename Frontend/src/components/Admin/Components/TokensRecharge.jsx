@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import './styles/tokensRecharge.css';
-import axiosInstance from '../components/axiosInstance'; // Import axiosInstance
+import '../styles/tokensRecharge.css';
+import axiosInstance from '../axiosInstance'; // Import axiosInstance
 
 export default function TokensRecharge() {
     // State for the input fields

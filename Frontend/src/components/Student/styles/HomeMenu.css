@@ -1,78 +1,175 @@
+/* Container for food cards */
 .food-card-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: #f5f5f5; /* Light background color for contrast */
 }
 
+/* Individual food card styling */
 .food-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    width: 200px;
+    background-color: #ffffff; /* White background */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+    padding: 1.5rem;
+    width: 220px; /* Slightly larger width for more content */
     display: flex;
+    flex-direction: column; /* Stack elements vertically */
     justify-content: space-between;
-    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
 }
 
+.food-card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+/* Food details section */
 .food-details {
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
 }
 
+/* Food name styling */
 .food-name {
-    font-size: 1rem;
+    font-size: 1.1rem; /* Slightly larger font size */
     font-weight: bold;
+    color: #333; /* Darker text color for better readability */
 }
 
+/* Food price styling */
 .food-price {
-    font-size: 0.9rem;
-    color: gray;
+    font-size: 1rem;
+    color: #555; /* Lighter gray for price */
 }
 
+/* Container for action buttons */
 .food-actions {
     display: flex;
+    justify-content: center;
     align-items: center;
 }
 
+/* Styling for add button */
 .add-button {
-    background-color: #6200ea;
+    background-color: blueviolet; /* Vibrant blueviolet background */
     color: white;
     border: none;
-    border-radius: 20px;
-    padding: 0.3rem 1rem;
+    border-radius: 25px; /* More rounded corners */
+    padding: 0.5rem 1.2rem; /* Larger padding for better click area */
     cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Smooth color transition */
 }
 
 .add-button:hover {
-    background-color: #3700b3;
+    background-color: darkviolet; /* Darker blueviolet on hover */
 }
 
+/* Container for quantity controls */
 .quantity-control {
     display: flex;
     align-items: center;
+    gap: 0.5rem; /* Space between buttons and quantity */
 }
 
+/* Styling for increment and decrement buttons */
 .decrement, .increment {
-    background-color: #6200ea;
+    background-color: #03a9f4; /* Bright blue background */
     color: white;
     border: none;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
+    width: 30px; /* Larger button size */
+    height: 30px; /* Larger button size */
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    font-size: 1.2rem; /* Larger icon size */
+    transition: background-color 0.3s ease; /* Smooth color transition */
 }
 
 .decrement:hover, .increment:hover {
-    background-color: #3700b3;
+    background-color: #0288d1; /* Darker blue on hover */
 }
 
+/* Styling for quantity text */
 .quantity {
-    margin: 0 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333; /* Darker text color for better readability */
+}
+
+/* Button to view cart */
+.view-cart-button {
+    background-color: blueviolet; /* Blueviolet background for the button */
+    color: white;
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    padding: 0.5rem 1.5rem; /* Generous padding */
+    cursor: pointer;
     font-size: 1rem;
     font-weight: bold;
+    margin-top: 1rem;
+    transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+.view-cart-button:hover {
+    background-color: darkviolet; /* Darker blueviolet on hover */
+}
+
+/* Total summary card styling */
+.total-summary-card {
+    position: fixed; /* Fixed at the bottom of the page */
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    background-color: #ffffff; /* White background */
+    border-radius: 12px 12px 0 0; /* Rounded corners at the top */
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+    padding: 1rem 2rem; /* Padding inside the summary card */
+    width: 100%;
+    text-align: center; /* Center text */
+}
+
+.total-summary-card h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333; /* Darker text color */
+}
+
+.total-summary-card p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: #555; /* Lighter gray for text */
+}
+
+/* Cart container for detailed view */
+.cart-container {
+    background-color: #ffffff; /* White background for cart */
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+    padding: 1.5rem;
+    margin-top: 1rem;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    max-width: 400px;
+    z-index: 1000; /* Ensure it appears above other content */
+}
+
+/* Cart item styling */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee; /* Light separator line */
+}
+
+.cart-item:last-child {
+    border-bottom: none; /* Remove bottom border for the last item */
 }

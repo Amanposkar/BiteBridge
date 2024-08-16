@@ -1,0 +1,65 @@
+
+
+/* Heading styling */
+h1 {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Error message styling */
+.error-message {
+  color: #d9534f; /* Red color for errors */
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.9em;
+  background-color: #f9f9f9; /* Light background for the table */
+}
+
+th,
+td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Header cell styling */
+th {
+  background-color: blueviolet; /* Blue color for headers */
+  color: white;
+}
+
+/* Table row styling */
+tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternating row colors */
+}
+
+/* Table cell styling */
+td ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+td li {
+  margin-bottom: 5px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  table {
+    font-size: 0.8em;
+  }
+
+  th,
+  td {
+    padding: 8px;
+  }
+}

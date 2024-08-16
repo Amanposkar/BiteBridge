@@ -1,0 +1,128 @@
+/* Main Container Styles */
+.mainContainer {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ensure container takes full viewport height */
+}
+
+/* Navbar Cover Styles */
+.canteenNavbarCover {
+  position: fixed; /* Fixed positioning to stay at the top */
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: blueviolet;
+  padding: 1rem;
+  height: 9vh;
+  width: 100%; /* Full width */
+  z-index: 2; /* Ensure navbar is above other elements */
+}
+
+/* Navbar Items Styles */
+.CanteenNav-items {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  color: white;
+}
+
+.CanteenNav-items ul {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.CanteenNav-items ul li {
+  padding: 1vw;
+  margin-left: 0.5vw;
+  margin-right: 2vw;
+  font-size: 1.5rem;
+}
+
+.CanteenNav-items ul .profileImage img {
+  width: 2vw;
+  height: auto;
+  filter: invert(1);
+}
+
+.CanteenNav-items ul li:hover {
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+/* Profile Dropdown Styles */
+.profileImage {
+  position: relative;
+  cursor: pointer;
+}
+
+.profile-dropdown {
+  opacity: 0;
+  position: absolute;
+  top: 90%;
+  right: -5vw;
+  background-color: blueviolet;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: right 0.5s ease, opacity 0.5s ease;
+}
+
+.profile-dropdown.open {
+  opacity: 1;
+  right: -1vw;
+}
+
+.profile-dropdown ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-dropdown ul li {
+  cursor: pointer;
+  margin: 0;
+  padding: 1rem;
+}
+
+.profile-dropdown li:hover {
+  background-color: rgba(126, 204, 48, 0.708);
+}
+
+/* Content Area Styles */
+.canteenContent-area {
+  flex: 1; /* Allow the content area to take remaining space */
+  padding: 2rem;
+  background-color: #f5f5f5;
+  margin-top: 9vh; /* Adjust this value to move content down if needed */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .CanteenNav-items {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .CanteenNav-items ul {
+    flex-direction: column;
+  }
+
+  .CanteenNav-items ul li {
+    margin: 0.5rem 0;
+  }
+
+  .CanteenNav-items ul li:hover {
+    width: 100vw;
+    color: black;
+    background-color: rgba(126, 204, 48, 0.708);
+  }
+
+  .canteenContent-area {
+    margin-top: 0; /* Reset margin-top on small screens */
+  }
+}

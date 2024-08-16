@@ -2,8 +2,9 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Signup from './components/SignupPage.jsx';
 import StudentHome from './components/Student/components/Homepage.jsx';
-import AdminHome from './components/AdminHome.jsx';
-import DishList from './components/DishList.jsx';
+import AdminHome from './components/Admin/Components/AdminHome.jsx';
+import CanteenHome from './components/Canteen/Components/CanteenHome.jsx';
+import OrderDetails from './components/Canteen/Components/OrderDetails.jsx';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -14,7 +15,8 @@ function App() {
         {/* Protecting routes */}
         <Route path='/' element={<ProtectedRoute><AdminHome /></ProtectedRoute>} />
         <Route path='/student' element={<ProtectedRoute><StudentHome /></ProtectedRoute>} />
-        <Route path='/dishes' element={<ProtectedRoute><DishList /></ProtectedRoute>} />
+        <Route path='/canteen' element={<ProtectedRoute><CanteenHome /></ProtectedRoute>} />
+        <Route path='/order/:orderId' element={<ProtectedRoute><OrderDetails /></ProtectedRoute>} />
       </Routes>
     </div>
   );

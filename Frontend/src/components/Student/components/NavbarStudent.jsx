@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axiosInstance from '../axiosInstance';
 import '../styles/studentNavbar.css';
+import Friends from './FriendList';
 import Home from './HomeMenu';
+import Cart from "./Cart";
+import UserProfile from './UserProfile'; // Import the new component
+import OrdersTable from './OrdersTable'; // Import the OrdersTable component
+import OrderHistory from './OrderHistory';
 
 export default function NavbarStudent() {
-    const [isOpen, setIsOpen] = useState(false); // Controls dropdown menu visibility
+    const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState("Home");
     const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+    const [cartItems, setCartItems] = useState([]); // State to hold cart items
+    const [orderSelection, setOrderSelection] = useState([]); // State to hold order selection
+    const [tokenBalance, setTokenBalance] = useState(0); // State to hold token balance
+    const [userName, setUserName] = useState(""); // State to hold user name
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -13,18 +23,51 @@ export default function NavbarStudent() {
 
     const handleMenuItemClick = (item) => {
         setSelectedItem(item);
-        // Optionally, you can keep the dropdown menu open or not
-        // setIsOpen(false); // Uncomment if you want to close the dropdown after selection
     };
 
     const toggleProfileDropdown = () => {
         setProfileDropdownOpen(!profileDropdownOpen);
     };
 
-    const handleLogout = () => {
-        alert("Logging out...");
-        // Implement logout logic here
+    const handleLogout = async () => {
+        try {
+            await axiosInstance.post('/student/logout');
+            localStorage.removeItem('jwtToken');
+            localStorage.removeItem('cartItems'); // Clear cart items on logout
+            alert("You have been logged out.");
+            window.location.href = '/signup';
+        } catch (error) {
+            console.error('Error logging out:', error);
+            alert("Error logging out. Please try again.");
+        }
     };
+
+    const handleViewCart = (updatedCartItems) => {
+        setCartItems(updatedCartItems); // Update the cartItems state
+        setSelectedItem("Cart");
+    };
+
+    const resetOrderSelection = () => {
+        setOrderSelection([]); // Clear order selection
+    };
+
+    const fetchUserProfile = async () => {
+        try {
+            const response = await axiosInstance.get('/student/studentdetails'); // Update endpoint as needed
+            setUserName(response.data.first_name);
+            setTokenBalance(response.data.tokens_balance);
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+        }
+    };
+
+    const updateTokenBalance = async () => {
+        await fetchUserProfile(); // Update token balance after order
+    };
+
+    useEffect(() => {
+        fetchUserProfile(); // Fetch user profile and token balance on component mount
+    }, []);
 
     return (
         <div className="mainContainer">
@@ -41,7 +84,6 @@ export default function NavbarStudent() {
                     <ul>
                         <li className="profileImage" onClick={toggleProfileDropdown}>
                             <img src="/images/profileIcon.png" alt="ProfileIcon" />
-                            {/* Profile dropdown */}
                             <div className={`profile-dropdown ${profileDropdownOpen ? 'open' : ''}`}>
                                 <ul>
                                     <li onClick={handleLogout}>Logout</li>
@@ -55,14 +97,30 @@ export default function NavbarStudent() {
                         <li onClick={() => handleMenuItemClick("Home")}>Home</li>
                         <li onClick={() => handleMenuItemClick("FriendList")}>FriendList</li>
                         <li onClick={() => handleMenuItemClick("Cart")}>Cart</li>
+                        <li onClick={() => handleMenuItemClick("Your Orders")}>Your Orders</li> {/* Added new menu item */}
+                        <li onClick={() => handleMenuItemClick("Order History")}>Order History</li>
                     </ul>
                 </div>
             </div>
             <div className="content-area">
-                {/* Display different content based on selected item */}
-                {selectedItem === "Home" && <Home />}
-                {selectedItem === "FriendList" && <p>Friend List</p>}
-                {selectedItem === "Cart" && <p>Cart Page</p>}
+                <UserProfile userName={userName} tokenBalance={tokenBalance} /> {/* Pass userName and tokenBalance to UserProfile */}
+                {selectedItem === "Home" && (
+                    <Home 
+                        onViewCart={handleViewCart} 
+                        cartItems={cartItems} // Pass current cartItems to Home
+                        setCartItems={setCartItems} // Pass setCartItems to update cartItems from Home
+                    />
+                )}
+                {selectedItem === "FriendList" && <Friends />}
+                {selectedItem === "Cart" && (
+                    <Cart 
+                        setCartItems={setCartItems} // Pass setCartItems to Cart
+                        resetOrderSelection={resetOrderSelection} // Pass resetOrderSelection to Cart
+                        updateTokenBalance={updateTokenBalance} // Pass updateTokenBalance to Cart
+                    />
+                )}
+                {selectedItem === "Your Orders" && <OrdersTable />} {/* Display OrdersTable component */}
+                {selectedItem === "Order History" && <OrderHistory />}
                 {!selectedItem && <h1>Welcome!</h1>}
             </div>
         </div>

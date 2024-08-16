@@ -1,8 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
-import Profile from "./Profile";
-import DishList from "./DishList";
-import "./styles/home.css";
+import "../styles/home.css";
 
 export default function AdminHome() {
   return (

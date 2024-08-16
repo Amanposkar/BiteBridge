@@ -1,0 +1,86 @@
+/* Container for Order Details */
+.order-details {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.order-details h1 {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.order-details .order-info {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.order-details .order-info h2 {
+  font-size: 24px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.order-details .order-info p {
+  font-size: 18px;
+  color: #444;
+  margin: 8px 0;
+}
+
+.order-details .order-info h3 {
+  font-size: 20px;
+  color: #333;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.order-details .order-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.order-details .order-info ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-details .order-info ul li:last-child {
+  border-bottom: none;
+}
+
+.order-details .order-info ul li p {
+  margin: 4px 0;
+}
+
+.order-details .error {
+  color: #d9534f;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.order-details .served-button {
+  display: block;
+  width: 100%;
+  background-color: blueviolet;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.order-details .served-button:hover {
+  background-color: darkviolet;
+  transform: translateY(-2px);
+}

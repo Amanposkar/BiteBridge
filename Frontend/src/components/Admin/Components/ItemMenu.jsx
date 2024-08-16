@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axiosInstance from "./axiosInstance"; // Adjust the path based on your directory structure
-import "./styles/ItemMenu.css";
+import axiosInstance from "../axiosInstance"; // Adjust the path based on your directory structure
+import "../styles/ItemMenu.css";
 
 const ItemMenu = () => {
   const [items, setItems] = useState([]);
@@ -72,20 +72,19 @@ const ItemMenu = () => {
       }
     } else if (action === "update" && formData.id) {
       try {
-        const updatedItem = {
-          ...items.find((item) => item.id === parseInt(formData.id, 10)),
-          quantity_remaining: formData.quantity,
-        };
+        const itemId = parseInt(formData.id, 10);
+        const existingItem = items.find((item) => item.id === itemId);
 
-        await axiosInstance.patch(
-          `/admin/updatedish/${updatedItem.id}/${formData.quantity}`
-        );
+        if (existingItem) {
+          const updatedQuantity = existingItem.quantity_remaining + formData.quantity;
 
-        setItems((prevItems) =>
-          prevItems.map((item) =>
-            item.id === updatedItem.id ? updatedItem : item
-          )
-        );
+          await axiosInstance.patch(`/admin/updatedish/${itemId}/${formData.quantity}`);
+          setItems((prevItems) =>
+            prevItems.map((item) =>
+              item.id === itemId ? { ...item, quantity_remaining: updatedQuantity } : item
+            )
+          );
+        }
       } catch (error) {
         console.error("Error updating dish:", error);
       }
@@ -231,7 +230,7 @@ const ItemMenu = () => {
               <td>{item.id}</td>
               <td>{item.name}</td>
               <td>
-                {item.price !== undefined ? item.price.toFixed(2) : "N/A"}
+              ₹{item.price !== undefined ? item.price.toFixed(2) : "N/A"}
               </td>
               <td>
                 {item.quantity_remaining !== undefined
